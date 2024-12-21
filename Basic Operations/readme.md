@@ -35,9 +35,39 @@ xor(x, y)    // Bitwise XOR
 not(x)       // Bitwise NOT
 ```
 
-## Best Practices
+## Zero Check Operation
 
-1. Always initialize variables before use
-2. Use clear naming conventions
-3. Comment complex operations
-4. Be careful with type conversions
+The `iszero` operation returns 1 if the input is 0, and 0 otherwise:
+
+```solidity
+iszero(x)    // Returns 1 if x is 0, 0 otherwise
+```
+
+## Control Flow Structures
+
+### If-Else Statement
+```solidity
+if condition { 
+    // code for true condition
+} 
+if iszero(condition) {
+    // code for false condition
+}
+```
+
+### For Loop
+```solidity
+for { initialization } condition { increment } {
+    // loop body
+}
+
+// Example:
+for { let i := 0 } lt(i, 10) { i := add(i, 1) } {
+    // loop body
+}
+```
+
+Note: Yul doesn't have a native else clause, but we can simulate it using `iszero` with another if statement.
+
+
+

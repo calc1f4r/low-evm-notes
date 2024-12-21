@@ -48,4 +48,35 @@ contract BasicOperations {
 
         return (andResult, orResult, xorResult);
     }
+
+    // Demonstrates iszero operation
+    function isZeroDemo(uint256 value) public pure returns (bool) {
+        bool result;
+        assembly {
+            result := iszero(value)  // returns 1 if value is 0, else returns 0
+        }
+        return result;
+    }
+
+    // Demonstrates for loop and if-else in Yul
+    function controlFlow(uint256 n) public pure returns (uint256) {
+        uint256 result;
+        
+        assembly {
+            // Initialize result
+            result := 0
+            
+            // For loop example: sum numbers from 1 to n if they're even
+            let i := 1
+            for { } lt(i, add(n, 1)) { i := add(i, 1) }
+            {
+                // If-else example: check if number is even
+                if iszero(mod(i, 2)) {
+                    result := add(result, i)
+                }
+            }
+        }
+        
+        return result;
+    }
 }
