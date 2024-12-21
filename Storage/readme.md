@@ -49,10 +49,6 @@ Storage in Ethereum is like a persistent database for smart contracts:
    - `sstore` (modification): 5,000 gas
    - `sload`: 200 gas
 
-2. **Best Practices**:
-   - Cache storage reads in memory
-   - Batch storage writes
-   - Use events for historical data
 
 ## Code Example Explanation
 
