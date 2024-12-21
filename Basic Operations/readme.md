@@ -85,8 +85,6 @@ for { } lt(i, n) { }
 }
 ```
 
-## Best Practices
-
 1. **Memory Management**
    - Always initialize variables before use
    - Be mindful of stack depth (limited to 1024)
@@ -119,6 +117,45 @@ mstore(0x40, 0x80)           // Update free memory pointer
 let value := mload(0x40)     // Load from memory
 mstore(0x40, value)          // Store to memory
 ```
+
+## Important Note: The `not` Operator Gotcha
+
+The `not` operator in Yul performs a bitwise negation, which might not behave as expected when used for boolean logic:
+
+```solidity
+// WRONG way to negate boolean conditions
+if not(lt(x, 10)) {    // DON'T DO THIS
+    // This is incorrect for boolean negation
+}
+
+// CORRECT way using iszero
+if iszero(lt(x, 10)) {  // DO THIS INSTEAD
+    // This is correct for boolean negation
+}
+```
+
+### Why `not` is Problematic for Booleans
+
+1. **Bitwise vs Boolean**: 
+   - `not(1)` returns 115792089237316195423570985008687907853269984665640564039457584007913129639934
+   - `iszero(1)` returns 0 (false)
+
+2. **Gas Inefficiency**:
+   - `not` performs a full 256-bit negation
+   - `iszero` is optimized for boolean checks
+
+### Example of Incorrect vs Correct Usage:
+```solidity
+// INCORRECT
+let x := 1              // true
+let wrong := not(x)     // This is NOT false!
+
+// CORRECT
+let x := 1              // true
+let correct := iszero(x) // This is properly false (0)
+```
+
+Best Practice: Always use `iszero` for boolean negation and condition checking.
 
 ## Further Resources
 - [Official Yul Documentation](https://docs.soliditylang.org/en/latest/yul.html)
