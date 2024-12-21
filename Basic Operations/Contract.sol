@@ -58,6 +58,22 @@ contract BasicOperations {
         return result;
     }
 
+    // Demonstrates if-else condition in Yul
+    function ifelseCondition() public pure returns (bool) {
+        bool result;
+        assembly {
+            let value := 0
+            if iszero(value) {
+                result := 1
+            }
+            // Yul doesn't have else, so we use another if with inverted condition
+            if gt(value, 0) {
+                result := 0
+            }
+        }
+        return result;
+    }
+
     // Demonstrates for loop and if-else in Yul
     function controlFlow(uint256 n) public pure returns (uint256) {
         uint256 result;
