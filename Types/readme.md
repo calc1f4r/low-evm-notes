@@ -1,18 +1,14 @@
 # Yul Types and Basic Syntax
-
 ## Key Points
-
 1. **Assignment Syntax**
    - Yul uses `:=` for assignments
    - Statements are written in assembly blocks
-
 ```solidity
 assembly {
     let x := 123    // Variable declaration and assignment
     x := 456        // Value reassignment
 }
 ```
-
 2. **Statement Termination**
    - No semicolons required at the end of statements
    - Each statement should be on a new line
@@ -33,7 +29,7 @@ assembly {
 // This won't work - strings are heap-stored
 function incorrectStringUsage() public pure returns (string memory) {
     string memory str;
-    assembly {
+    assembly {  
         str := "Hello World"    // Error: Cannot assign to heap
     }
     return str;

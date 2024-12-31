@@ -5,6 +5,10 @@ contract Contract {
     // State variable x is automatically assigned to slot 0
     uint256 x;
     uint256 y;
+    uint16 a;
+    uint32 b;
+    uint64 c;
+
 
     function setX() public {
         assembly {
@@ -30,11 +34,24 @@ contract Contract {
         return result;
     }
 
-
     // Writing to a custom slot 
     function setY(uint256 slot, uint256 value) public {
         assembly {
             sstore(slot, value) 
         }
+    }
+
+    function setValueWithOffset(uint256 offset, uint256 value) public {
+        assembly {
+            sstore(add(x.slot, offset), value)
+        }
+    }
+
+    function getXOffset() public pure returns (uint256) {
+        uint256 result;
+        assembly{
+            result:=x.offset
+        }
+        return result;
     }
 }
